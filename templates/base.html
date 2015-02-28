@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+  <head>
+
+    <title>OmniNotes Web</title>
+
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'includes/css/bootstrap-glyphicons.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'includes/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'includes/css/sidebar.css' %}" rel="stylesheet">
+    <link href=" {% static 'includes/css/sidebar-bootstrap.css' %} " rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'includes/css/font-awesome.min.css' %}">
+
+    <!-- Include Modernizr in the head, before any other Javascript -->
+    <script src="{% static 'includes/js/modernizr-2.6.2.min.js' %}"></script>
+
+  </head>
+  <body>
+
+    <!-- The navigation bar-->
+    <nav class="navbar navbar-default navbar-fixed-top mainHeader">
+      <div class="container-fluid"> 
+        <div class="navbar-header">
+        
+          <a class="navbar-brand" href=""> Notes</a>
+        </div>
+      </div>
+
+      <div  id="icons"> 
+		{% block icons %}       {% endblock %}
+      </div>
+    </nav>
+    <!-- SIDEBAR -->
+    <div data-sidebar="true" class="sidebar-trigger">
+
+      <a class="sidebar-toggle" href="">
+        <span class="glyphicon glyphicon-align-justify"></span>
+      </a>
+      <div class="sidebar-wrapper sidebar-default">
+        <div class="sidebar-scroller">
+          <ul class="sidebar-menu">
+            <li class="sidebar-group"><span>Omni Notes</span>
+              <ul class="sidebar-group-menu">
+              <li class="sidebar-item">
+                <a href="" class="active"><span class="glyphicon glyphicon-file"></span> <span class="nav-item">Notes</span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="" ><span class="glyphicon glyphicon-time"></span>  <span class="nav-item"> Reminders</span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="" ><span class="glyphicon glyphicon-trash"></span>  <span class="nav-item"> Trash</span></a>
+              </li>
+              <li class="sidebar-item"><a href="">
+                <span class="glyphicon glyphicon-folder-open"></span> <span class="nav-item">Uncategorized</span></a>
+              </li>
+              <li class="sidebar-item">
+                <h5>Categories <button title="New category" data-placement="left" data-toggle="tooltip" class="btn glyphicon glyphicon-plus" style="font-size:small; margin-left:120px;"></button></h5>
+              </li>
+
+              <li class="sidebar-item">
+                <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">Books<span class="badge pull-right">43</span></span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href=""><span class="glyphicon glyphicon-stop"></span> </span><span class="nav-item">Diary &amp; Dreams<span class="badge pull-right" >38</span></span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href=""><span class="glyphicon glyphicon-stop"></span><span class="nav-item">Startup</span><span class="badge pull-right">28</span></a>
+              </li>
+              <hr>
+              <li class="sidebar-item">
+                <a href=""><span class="glyphicon glyphicon-cog"></span> <span class="nav-item">Settings</span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#changeLogModal"  data-toggle="modal"><span class="glyphicon glyphicon-hand-up"></span> ChangeLog</a>
+              </li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!--end mainHeader -->
+    <button class=" btn-danger btn glyphicon glyphicon-plus floating-action-icon"></button>
+
+    <!-- Add note modal -->
+    <div class="modal fade " id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="newNoteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="newNoteLabel"><span class="glyphicon glyphicon-pencil"></span>  New Note</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <!-- <label for="note-title" class="control-label">Title:</label> -->
+                <input type="text" class="form-control" id="add-note-title" placeholder="Title" style="border:none;border-bottom:1px solid gray; box-shadow:none;">
+              </div>
+              <div class="form-group">
+                 <!-- <label for="note-content" class="control-label">Content:</label> -->
+                <textarea class="form-control" id="add-note-content" placeholder="Content" rows="10" style="border:none;border-bottom:1px solid gray; box-shadow:none;"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="addNoteModalSaveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal for opening note -->
+    <div class="modal fade" id="openNoteModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" data-dismiss="modal"> &times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  <div id="main" class="container-fluid">
+    <div class="col-sm-12" id="notesFeed">
+        <div class="container" id="main">
+              <div class="col-md-12 row notes-container">
+
+				{% block noteContainer%} {% endblock %}
+
+
+<!-- These are the closing div of main containers  -->
+               </div>
+        </div>
+    </div>
+</div>
+
+
+  <!-- All Javascript at the bottom of the page for faster page loading -->
+
+
+  <script src="{% static 'includes/js/jquery.min.js' %}"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <!-- Custom JS -->
+  <script src="{% static 'includes/js/script.js' %}"></script>
+  <script src="{% static 'includes/js/hammer.min.js' %}"></script>
+  <script src="{% static 'includes/js/sidebar.js' %}"></script>
+
+  </body>
+  <footer class="footer" >
+    Made in India with <span class="glyphicon glyphicon-heart"></span> by <a href="htp://github.com/thewhitetulip">@thewhitetulip</a>
+  </footer>
+</html>

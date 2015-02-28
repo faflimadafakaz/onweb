@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block icons %}
+        <button class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></button>
+        <button class="btn btn-action glyphicon glyphicon-sort" data-placement="bottom" data-toggle="tooltip" title="sort" ></button>
+        <button class="btn btn-action glyphicon glyphicon-refresh" data-placement="bottom" data-toggle="tooltip" title="refresh" ></button>
+        <button class="btn btn-action glyphicon glyphicon-info-sign" data-placement="bottom" data-toggle="tooltip" title="about" ></button>
+        <button class="btn btn-action glyphicon glyphicon-off" data-placement="bottom" data-toggle="tooltip" title="sign out" ></button>
+{% endblock %}
+
+{% block noteContainer %}
+		
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+  <div class="panel note-sm">
+    <div class="panel-heading"> The one about Fringe<button class="close note-close"> &times;</button></div>
+    <hr style="margin:0 0 3px;">
+    <div class="panel-body">Some much happened here, so much is about to.</div>
+    <div  class="panel-footer" >
+      <div class="dropdown pull-right">
+        <span class="dd add-reminder" ><span class="glyphicon glyphicon-time"></span></span>
+        <span class="dd edit-note" href="#openNoteModal"  data-toggle="modal"> <span class="glyphicon glyphicon-edit" ></span></span>
+        <span class="dd open-note"  data-toggle="modal" > <span class="glyphicon glyphicon-resize-full" ></span></span>
+        <span class="dd dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-th"></span>
+        </span>
+        <ul class="dropdown-menu " role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-share"></span>  Share</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-lock"></span> Mask</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-inbox"></span>  Archive</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-trash"></span>  Delete</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
