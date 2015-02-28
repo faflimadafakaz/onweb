@@ -30,8 +30,7 @@
     <nav class="navbar navbar-default navbar-fixed-top mainHeader">
       <div class="container-fluid"> 
         <div class="navbar-header">
-        
-          <a class="navbar-brand" href=""> Notes</a>
+          <a class="navbar-brand" href="/"> Notes</a>
         </div>
       </div>
 
@@ -39,9 +38,9 @@
 		{% block icons %}       {% endblock %}
       </div>
     </nav>
+    
     <!-- SIDEBAR -->
     <div data-sidebar="true" class="sidebar-trigger">
-
       <a class="sidebar-toggle" href="">
         <span class="glyphicon glyphicon-align-justify"></span>
       </a>
@@ -51,16 +50,16 @@
             <li class="sidebar-group"><span>Omni Notes</span>
               <ul class="sidebar-group-menu">
               <li class="sidebar-item">
-                <a href="" class="active"><span class="glyphicon glyphicon-file"></span> <span class="nav-item">Notes</span></a>
+                <a href="{% url 'home' %}" class="active"><span class="glyphicon glyphicon-file"></span> <span class="nav-item">Notes</span></a>
               </li>
               <li class="sidebar-item">
-                <a href="" ><span class="glyphicon glyphicon-time"></span>  <span class="nav-item"> Reminders</span></a>
+                <a href="{% url 'reminders' %}" ><span class="glyphicon glyphicon-time"></span>  <span class="nav-item"> Reminders</span></a>
               </li>
               <li class="sidebar-item">
-                <a href="" ><span class="glyphicon glyphicon-trash"></span>  <span class="nav-item"> Trash</span></a>
+                <a href="{% url 'trash' %}" ><span class="glyphicon glyphicon-trash"></span>  <span class="nav-item"> Trash</span></a>
               </li>
-              <li class="sidebar-item"><a href="">
-                <span class="glyphicon glyphicon-folder-open"></span> <span class="nav-item">Uncategorized</span></a>
+              <li class="sidebar-item">
+              <a href=" {% url 'uncategorized' %}">   <span class="glyphicon glyphicon-folder-open"></span> <span class="nav-item">Uncategorized</span></a>
               </li>
               <li class="sidebar-item">
                 <h5>Categories <button title="New category" data-placement="left" data-toggle="tooltip" class="btn glyphicon glyphicon-plus" style="font-size:small; margin-left:120px;"></button></h5>
@@ -84,7 +83,7 @@
     </div>
 
     <!--end mainHeader -->
-    <button class=" btn-danger btn glyphicon glyphicon-plus floating-action-icon"></button>
+    {% block FAB %} {%endblock%}
 
     <!-- Add note modal -->
     <div class="modal fade " id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="newNoteLabel" aria-hidden="true">
@@ -161,6 +160,6 @@
 
   </body>
   <footer class="footer" >
-    Made in India with <span class="glyphicon glyphicon-heart"></span> by <a href="htp://github.com/thewhitetulip">@thewhitetulip</a>
+    {% block footer %} {% endblock%}
   </footer>
 </html>

@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
 
-{% block FAB %} 
-	<button class=" btn-danger btn glyphicon glyphicon-plus floating-action-icon"></button>
-{% endblock %}
-       
 {% block icons %}
-        <a class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></a>
+	 <a class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></a>
         <a class="btn btn-action glyphicon glyphicon-sort" data-placement="bottom" data-toggle="tooltip" title="sort" ></a>
         <a class="btn btn-action glyphicon glyphicon-refresh" data-placement="bottom" data-toggle="tooltip" title="refresh" ></a>
         <a class="btn btn-action glyphicon glyphicon-info-sign" data-placement="bottom" data-toggle="tooltip" title="about" ></a>
@@ -13,7 +9,11 @@
         <a href="/settings/" class="btn btn-action glyphicon glyphicon-cog" data-placement="bottom" data-toggle="tooltip" title="settings"></a>
 {% endblock %}
 
-{% block noteContainer %}
-		
 
+{% block FAB %} 
+		<button class=" btn-danger btn glyphicon glyphicon-plus floating-action-icon"></button>
+{%endblock %}
+
+{% block noteContainer %}
+	your settings are here
 {% endblock %}

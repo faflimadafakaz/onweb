@@ -1,9 +1,37 @@
 {% extends 'base.html' %}
 
 {% block icons %}
-   <button class="btn btn-primary"> Log in </button>
+  
 {% endblock %}
 
-{% block notesContainer %}
-  please login here: :D :P
+
+{% block noteContainer %}
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+   <div class="panel note-sm">
+        <div class="panel-heading"> Login</div>
+        <hr style="margin:0 0 3px;">
+        <div class="panel-body">
+        <form>
+        
+        </form>
+        </div>
+
+   </div>
+ </div>
+
+ <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 ">
+   <div class="panel note-sm">
+        <div class="panel-heading"> Register</div>
+        <hr style="margin:0 0 3px;">
+        <div class="panel-body">
+           <form>
+           
+           </form>
+        </div>
+   </div>
+ </div>
+{% endblock %}
+
+{% block footer%}
+	Made in India with <span class="glyphicon glyphicon-heart"></span> by <a href="htp://github.com/thewhitetulip">@thewhitetulip</a>
 {% endblock %}
