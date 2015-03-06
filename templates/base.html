@@ -64,16 +64,7 @@
               <li class="sidebar-item">
                 <h5>Categories <button title="New category" data-placement="left" data-toggle="tooltip" class="btn glyphicon glyphicon-plus" style="font-size:small; margin-left:120px;"></button></h5>
               </li>
-
-              <li class="sidebar-item">
-                <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">Books<span class="badge pull-right">43</span></span></a>
-              </li>
-              <li class="sidebar-item">
-                <a href=""><span class="glyphicon glyphicon-stop"></span> </span><span class="nav-item">Diary &amp; Dreams<span class="badge pull-right" >38</span></span></a>
-              </li>
-              <li class="sidebar-item">
-                <a href=""><span class="glyphicon glyphicon-stop"></span><span class="nav-item">Startup</span><span class="badge pull-right">28</span></a>
-              </li>
+				{% block sidebar_category %} {%endblock sidebar_category%}
               </ul>
             </li>
 
