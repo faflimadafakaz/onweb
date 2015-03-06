@@ -134,6 +134,10 @@ nav  .glyphicon:hover{
   height:140px;
 }
 
+.note-lg{
+  height : 240px;
+}
+
 .panel-body{
   height:40px;
   overflow-y: hidden;

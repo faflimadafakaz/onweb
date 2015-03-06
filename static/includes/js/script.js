@@ -30,17 +30,7 @@ $(document).ready(function(){
 
    $('#addNoteModalSaveBtn').click(addNoteToDOM); //Adds note to the DOM
 
-   $( document ).keypress(
-     function(event){
-       if ( event.which == 110 ) { //bind the 'n' key to add note
-           $('#addNoteModal').modal('show');
-        }
-
-        if (event.which==109  ) { //binds the 'm' key to show the navigation drawer
-          $('.sidebar-toggle').click();
-        }
-     }
-   );
+     
 
 });
 
