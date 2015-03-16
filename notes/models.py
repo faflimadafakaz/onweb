@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
    
 class Category(models.Model):
     name = models.CharField(max_length=40)
-    slug = models.CharField(max_length=50, primary_key=True)
+    slug = models.CharField(max_length=50)
     #colour = models.IntegerField(required=False)
     
     def save(self, *args, **kwargs):
@@ -20,9 +20,6 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
     
-class UserProfile(models.Model):
-    user = OneToOneField(User)
-    
 
 class Notes(models.Model):
     title = models.CharField(max_length=100, null=True)
@@ -30,7 +27,7 @@ class Notes(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category)
-    user = models.ForeignKey(UserProfile)
+    user = models.ForeignKey(User)
     #reminder = models.DateTimeField(default='',null=True)
     permalink = models.CharField(max_length=50, null=False)
     
@@ -38,7 +35,6 @@ class Notes(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
+        self.created = datetime.now()
         self.modified = datetime.now()
         super(Notes, self).save(*args, **kwargs)
-
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

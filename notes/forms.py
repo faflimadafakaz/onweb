@@ -7,7 +7,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput , Textarea
 from django.utils.html import strip_tags
-from notes.models import UserProfile
 from django.contrib.auth.models import User
 
 class UserCreateForm(UserCreationForm):
@@ -34,7 +33,7 @@ class AuthenticateForm(AuthenticationForm):
     def is_valid(self):
         form = super(AuthenticateForm, self).is_valid()
         for f,error in self.errors.iteritems():
-            if f!='__all_':
+            if f!='__all__':
                 self.fields[f].widget.attrs.update({'class':'error', 'value':strip_tags(error)})
         return form
     

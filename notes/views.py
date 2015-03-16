@@ -5,13 +5,15 @@ from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate, logout
 
 from notes.forms import UserCreateForm, AuthenticateForm
-from notes.models import Notes,UserProfile, Category
+from notes.models import Notes, Category
+from django.contrib.auth.models import User
 # Create your views here.
 
 def home(request, auth_form=None, user_form=None):
     if request.user.is_authenticated():
-         user = request.user
-         uuser = UserProfile.objects.filter(user=user.id)[0]
+         user = request.user            
+         uuser = User.objects.filter(id=user.id)[0]
+        
          notes = Notes.objects.all().order_by('-created').filter(user=uuser)
          categories=  Category.objects.all()
          return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories})
