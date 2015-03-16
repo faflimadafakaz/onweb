@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=40)
     slug = models.CharField(max_length=50)
+    user = models.ForeignKey(User)
     #colour = models.IntegerField(required=False)
     
     def save(self, *args, **kwargs):
@@ -35,6 +36,5 @@ class Notes(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
-        self.created = datetime.now()
         self.modified = datetime.now()
         super(Notes, self).save(*args, **kwargs)
