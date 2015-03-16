@@ -24,7 +24,7 @@
         <div  class="panel-footer" >
           <div class="dropdown pull-right">
           {{note.category}}
-            <span class="dd glyphicon glyphicon-time"></span>
+            <span class="dd ">{{ note.created|timesince }} ago</span>
             <span class="dd edit-note" href="#openNoteModal"  data-toggle="modal"> <span class="glyphicon glyphicon-edit" ></span></span>
             <span class="dd open-note" href="#openNoteModal"  data-toggle="modal"> <span class="glyphicon glyphicon-resize-full" ></span></span>
             <span class="dd dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
@@ -34,7 +34,7 @@
               <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-share"></span>  Share</a></li>
               <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-lock"></span> Mask</a></li>
               <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-inbox"></span>  Archive</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href=""><span class="glyphicon glyphicon-trash"></span>  Delete</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="/delete_note/{{note.permalink}}"><span class="glyphicon glyphicon-trash"></span>  Delete</a></li>
             </ul>
           </div>
         </div>
@@ -47,7 +47,7 @@
 {%block sidebar_category%}
    {% for category in categories %}
      <li class="sidebar-item">
-        <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">{{category.name}}<span class="badge pull-right">3</span></span></a>
+        <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">{{category}}<span class="badge pull-right"></span></span></a>
       </li>
    {% endfor%}
 {%endblock%}

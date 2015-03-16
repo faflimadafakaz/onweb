@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+import random
+
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate, logout
@@ -7,6 +9,11 @@ from django.contrib.auth import login, authenticate, logout
 from notes.forms import UserCreateForm, AuthenticateForm
 from notes.models import Notes, Category
 from django.contrib.auth.models import User
+
+from datetime import datetime
+from django.utils.text import slugify
+from _random import Random
+from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
 def home(request, auth_form=None, user_form=None):
@@ -15,7 +22,7 @@ def home(request, auth_form=None, user_form=None):
          uuser = User.objects.filter(id=user.id)[0]
         
          notes = Notes.objects.all().order_by('-created').filter(user=uuser)
-         categories=  Category.objects.all()
+         categories =  Category.objects.filter(user=user)
          return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories})
     else:
          auth_form = auth_form or  AuthenticateForm()
@@ -24,12 +31,15 @@ def home(request, auth_form=None, user_form=None):
 
 def login_view(request):
     if request.method=='POST':
-        form = AuthenticateForm(data=request.POST)
-        if form.is_valid():
-            login(request, form.get_user())
+        if request.user.is_authenticated():
             return redirect('/')
         else:
-            return home(request, auth_form=form)
+            form = AuthenticateForm(data=request.POST)
+            if form.is_valid():
+                login(request, form.get_user())
+                return redirect('/')
+            else:
+                return home(request, auth_form=form)
     return redirect('/')
 
 def logout_view(request):
@@ -45,16 +55,50 @@ def register(request):
             user_form.save()
             user=authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/')
+            return redirect('home')
         else:
             return home(request, user_form=user_form)
-    return redirect('/')
+    return redirect('home')
 
-def add_note(request, note_slug):
-    return HttpResponse("adding note"+ note_slug)
+def add_note(request):
+    if request.method!='POST':
+        if request.user.is_authenticated():
+            note = Notes()
+            note.title = u"sample title"; 
+            note.content = u"sample note content";  
+            note.user = request.user;
+            note.category= Category.objects.get(name='diary')
+            note.created = datetime.now()
+            note.permalink = unicode(slugify(note.title)+'-'+str(random.randint(1,100)))
+            note.save()
+        else:
+            return redirect('login')
+    return redirect('home')
 
 def delete_note(request, note_slug):
-    return HttpResponse('delete note'+ note_slug)
+    if request.method=='GET':
+        if request.user.is_authenticated():
+            note = Notes.objects.get(permalink = note_slug)
+            note.delete()
+        else:
+            return redirect('login')
+    return redirect('/')
+
+def add_category(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            pass
+        else:
+            return redirect('login')
+    return redirect('home')
+
+def delete_category(request):
+    if request.method=='GET':
+        if request.user.is_authenticated():
+            pass
+        else:
+            return redirect('login')
+    return redirect('home')
 
 def settings(request):
     return render(request, 'settings.html')
@@ -67,3 +111,4 @@ def trash(request):
 
 def reminders(request):
     return render(request, 'home.html')
+
