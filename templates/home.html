@@ -24,7 +24,7 @@
         <div  class="panel-footer" >
           <div class="dropdown pull-right">
           {{note.category}}
-            <span class="dd ">{{ note.created|timesince }} ago</span>
+            <span class="dd glyphicon glyphicon-time" data-placement="bottom" data-toggle="tooltip" title="{{ note.created }}"></span>
             <span class="dd edit-note" href="#openNoteModal"  data-toggle="modal"> <span class="glyphicon glyphicon-edit" ></span></span>
             <span class="dd open-note" href="#openNoteModal"  data-toggle="modal"> <span class="glyphicon glyphicon-resize-full" ></span></span>
             <span class="dd dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
@@ -47,7 +47,28 @@
 {%block sidebar_category%}
    {% for category in categories %}
      <li class="sidebar-item">
-        <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">{{category}}<span class="badge pull-right"></span></span></a>
+        <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">{{category}}<span class="badge pull-right">{{count.category}} </span></span></a>
       </li>
    {% endfor%}
 {%endblock%}
+
+{% block sidebar_menu %}
+              <li class="sidebar-item">
+                <a href="{% url 'home' %}" class="active"><span class="glyphicon glyphicon-file"></span> <span class="nav-item">Notes</span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'reminders' %}" ><span class="glyphicon glyphicon-time"></span>  <span class="nav-item"> Reminders</span></a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{% url 'trash' %}" ><span class="glyphicon glyphicon-trash"></span>  <span class="nav-item"> Trash</span></a>
+              </li>
+              <li class="sidebar-item">
+              <a href=" {% url 'uncategorized' %}">   <span class="glyphicon glyphicon-folder-open"></span> <span class="nav-item">Uncategorized</span></a>
+              </li>
+              <li class="sidebar-item">
+                <h5>Categories <button style="margin-left:127px" id="add_category" class="btn glyphicon glyphicon-plus"></button></h5>
+              </li>
+              <li class="sidebar-item" id="category_form">
+              <h5><form action='/add_category/'> <input name='category_name' type='text'> <input type='submit' value='Ok' class='btn btn-primary'></form></h5>
+              </li>
+{% endblock sidebar_menu %}

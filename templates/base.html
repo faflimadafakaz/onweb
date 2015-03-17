@@ -49,21 +49,7 @@
           <ul class="sidebar-menu">
             <li class="sidebar-group"><span>Omni Notes</span>
               <ul class="sidebar-group-menu">
-              <li class="sidebar-item">
-                <a href="{% url 'home' %}" class="active"><span class="glyphicon glyphicon-file"></span> <span class="nav-item">Notes</span></a>
-              </li>
-              <li class="sidebar-item">
-                <a href="{% url 'reminders' %}" ><span class="glyphicon glyphicon-time"></span>  <span class="nav-item"> Reminders</span></a>
-              </li>
-              <li class="sidebar-item">
-                <a href="{% url 'trash' %}" ><span class="glyphicon glyphicon-trash"></span>  <span class="nav-item"> Trash</span></a>
-              </li>
-              <li class="sidebar-item">
-              <a href=" {% url 'uncategorized' %}">   <span class="glyphicon glyphicon-folder-open"></span> <span class="nav-item">Uncategorized</span></a>
-              </li>
-              <li class="sidebar-item">
-                <h5>Categories <button title="New category" data-placement="left" data-toggle="tooltip" class="btn glyphicon glyphicon-plus" style="font-size:small; margin-left:120px;"></button></h5>
-              </li>
+				{% block sidebar_menu %} {%endblock sidebar_menu %}
 				{% block sidebar_category %} {%endblock sidebar_category%}
               </ul>
             </li>

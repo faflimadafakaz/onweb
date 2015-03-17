@@ -27,6 +27,7 @@
         <div class="panel-heading"> Register</div>
         <hr style="margin:0 0 3px;">
            <form action="/register/" method="post">
+           
            {% csrf_token %}
            
           {% for field in user_form %}
@@ -41,3 +42,7 @@
 {% block footer%}
 	Made in India with <span class="glyphicon glyphicon-heart"></span> by <a href="htp://github.com/thewhitetulip">@thewhitetulip</a>
 {% endblock %}
+
+{% block sidebar_menu %}
+ Sign up or login to use omninotes
+{%endblock sidebar_menu %}
