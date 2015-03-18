@@ -7,15 +7,13 @@
 
 {% block noteContainer %}
 		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
-   <div class="panel note-sm">
+   <div class="panel note-lg">
         <div class="panel-heading"> Login</div>
         <hr style="margin:0 0 3px;">
         
         <form action="/login/" method="post"> {% csrf_token %}
-          {% for field in auth_form %}
-              {{field}}
-          {% endfor %}
-          <input type="submit" value="Log in" id="BtnLogin">
+          {{auth_form.as_p}}
+          <input class=" btn btn-primary" type="submit" value="Log in" id="BtnLogin">
         </form>
         
 
@@ -26,6 +24,7 @@
    <div class="panel note-lg">
         <div class="panel-heading"> Register</div>
         <hr style="margin:0 0 3px;">
+        <span class="panel-body"> Enter your username, email ID, password and repeat the password</span>
            <form action="/register/" method="post">
            
            {% csrf_token %}
@@ -33,7 +32,7 @@
           {% for field in user_form %}
               {{field}}
           {% endfor %}
-               <input type="submit" value = "submit" id="btnSubmit">
+               <input type="submit" value = "submit" id="btnSubmit" class=" btn btn-primary">
            </form>
    </div>
  </div>
