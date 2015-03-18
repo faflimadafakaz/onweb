@@ -122,3 +122,14 @@ def trash(request):
 def reminders(request):
     return render(request, 'home.html')
 
+def notes_by_category(request, category_slug):
+    if request.user.is_authenticated():
+        user = request.user
+        categories = Category.objects.filter(user=user)
+        count=0
+        category_form = CategoryForm()
+        cat = Category.objects.get(slug=category_slug)
+        notes = Notes.objects.filter(category = cat)
+        return render(request, 'home.html',{'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form})
+    else:
+        return render('login')
