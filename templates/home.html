@@ -47,7 +47,15 @@
 {%block sidebar_category%}
    {% for category in categories %}
      <li class="sidebar-item">
-        <a href=""><span class="glyphicon glyphicon-stop"></span>  </span><span class="nav-item">{{category}}<span class="badge pull-right">{{count.category}} </span></span></a>
+ 
+         <span class="glyphicon glyphicon-stop ">  </span>
+        			<span class="nav-item">{{category}} (2)
+        			     </span>
+        			     <button type="button" class="btn categorycog " data-toggle="popover" title="properties" data-html='true' data-placement="left" 
+        			     data-content="<a class='btn btn-danger' href='/delete_category/diary'>Delete</a><br><br><a class='btn btn-primary' href='/cateogry/diary'>View</a>"><span class="glyphicon glyphicon-cog">
+        			     </span></button>
+
+  
       </li>
    {% endfor%}
 {%endblock%}
@@ -69,6 +77,6 @@
                 <h5>Categories <button style="margin-left:127px" id="add_category" class="btn glyphicon glyphicon-plus"></button></h5>
               </li>
               <li class="sidebar-item" id="category_form">
-              <h5><form action='/add_category/'> <input name='category_name' type='text'> <input type='submit' value='Ok' class='btn btn-primary'></form></h5>
+              <h5><form action='/add_category/' method="POST"> {% csrf_token %} <span class="form-group">{{ category_form.name }} <input type='submit' value='Ok' class='btn btn-primary'></span> </form></h5>
               </li>
 {% endblock sidebar_menu %}

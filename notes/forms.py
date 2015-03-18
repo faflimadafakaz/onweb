@@ -8,6 +8,9 @@ from django import forms
 from django.forms.widgets import TextInput, PasswordInput , Textarea
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
+from django.forms.models import ModelForm
+
+from notes.models import Category, Notes
 
 class UserCreateForm(UserCreationForm):
     username = forms.CharField(required=True, widget = TextInput(attrs={'placeholder':'username'}))
@@ -37,7 +40,21 @@ class AuthenticateForm(AuthenticationForm):
                 self.fields[f].widget.attrs.update({'class':'error', 'value':strip_tags(error)})
         return form
     
-# class NotesForm(forms.ModelForm):
-#     title = forms.CharField(required=False, widgets=TextInput(attrs={'placeholder':'Title of note'}))
-#     content = forms.CharField(required=True, widgets = Textarea(attrs={'placeholder':'Note content'}))
-#     category = forms.MultiValueField()
+class NotesForm(forms.ModelForm):
+     title = forms.CharField(required=False, widget=TextInput(attrs={'placeholder':'Title of note'}))
+     content = forms.CharField(required=True, widget = Textarea(attrs={'placeholder':'Note content'}))
+     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all())
+     
+     class Meta:
+         model=Notes
+         fields = ['title', 'content','category']
+         
+
+
+class CategoryForm(ModelForm):
+    name = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'new category', 'class':"form-control", 'width':'40px'}))
+    
+    class Meta:
+        model=Category
+        fields = ['name']
+        

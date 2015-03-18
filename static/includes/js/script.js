@@ -14,13 +14,13 @@ $(document).ready(function(){
   elements dynamically*/
   $('[data-toggle="tooltip"]').tooltip();
 
-  $('#addNote').click(function(){
-    $('#addNoteModal').modal('show');
-  });
+	$('#category_form').addClass('hidden');
 
   $('.floating-action-icon').click(function(){
     $('#addNoteModal').modal('show');
   });
+  
+  $('[data-toggle="popover"]').popover({});
 
    $(document).on("click", '.note-close',closeDelete); //when you delete a note, the x on the top right corner
 
@@ -28,7 +28,11 @@ $(document).ready(function(){
 
    $(document).on('click','.hashtag', hashTag); //function to handle search by hashtag *TODO*
 
-   $('#addNoteModalSaveBtn').click(addNoteToDOM); //Adds note to the DOM
+   
+   $('#add_category').click(function(){
+       $('#category_form').toggleClass('hidden');
+   });
+   
 
      
 

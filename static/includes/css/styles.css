@@ -215,11 +215,6 @@ Navigation drawer
   background-color: white;
 }
 
-.badge{
-  background-color: #7D8EF0;
-  margin-right:10px;
-  float:right;
-}
 
 
 /* --------------------------------------
@@ -356,4 +351,13 @@ Media Queries
 }
 .tooltip.left .tooltip-arrow {
   border-left-color: rgba(16, 21, 48, 0.50);
+}
+
+.form-control{
+	width:70%;
+	display:inline;
+}
+
+.popover{
+  z-index:1009;
 }
