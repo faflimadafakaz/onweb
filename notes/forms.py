@@ -52,7 +52,7 @@ class NotesForm(forms.ModelForm):
 
 
 class CategoryForm(ModelForm):
-    name = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'new category', 'class':"form-control", 'width':'40px'}))
+    name = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'new category', 'class':"form-control", 'id':'form70pc'}))
     
     class Meta:
         model=Category

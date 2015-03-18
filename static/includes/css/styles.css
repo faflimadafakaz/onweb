@@ -37,7 +37,7 @@ textarea {
 
 .floating-action-icon{
   position: fixed;
-  bottom:40px;
+  top:45%;
   right:30px;
   z-index:101;
   width: 56px;
@@ -196,8 +196,12 @@ Navigation drawer
   display: block;
 }
 
-.sidebar-item .glyphicon:hover{
+.sidebar-item .glyphicon{
   color:black;
+}
+
+.whitebutton{
+   background-color:white;
 }
 
 
@@ -353,8 +357,10 @@ Media Queries
   border-left-color: rgba(16, 21, 48, 0.50);
 }
 
-.form-control{
+#form70pc{
 	width:70%;
+}
+.form-control{
 	display:inline;
 }
 

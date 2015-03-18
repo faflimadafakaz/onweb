@@ -16,9 +16,13 @@ $(document).ready(function(){
 
 	$('#category_form').addClass('hidden');
 
-  $('.floating-action-icon').click(function(){
-    $('#addNoteModal').modal('show');
-  });
+    $('.floating-action-icon').popover({
+	  html: true,
+	  content: "<form action='/add_note/' method='post'> <input name='title' type='text' class='form-control' placeholder='Title' >\
+	   <textarea name='content' class='form-control' placeholder='content'></textarea> <select class='form-control'> <option>Milk</option> <option>Coffee</option>  <option>Tea</option> </select>  <input type='submit' class='btn btn-primary' value='submit'> </form>",
+	  animation: true,
+	  
+	  });
   
   $('[data-toggle="popover"]').popover({});
 
