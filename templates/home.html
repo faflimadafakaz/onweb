@@ -10,12 +10,12 @@
         <a class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></a>
         <a class="btn btn-action glyphicon glyphicon-sort" data-placement="bottom" data-toggle="tooltip" title="sort" ></a>
         <a class="btn btn-action glyphicon glyphicon-refresh" data-placement="bottom" data-toggle="tooltip" title="refresh" ></a>
-        <a class="btn btn-action glyphicon glyphicon-info-sign" data-placement="bottom" data-toggle="tooltip" title="about" ></a>
         <a href="/logout/" class="btn btn-action glyphicon glyphicon-off" data-placement="bottom" data-toggle="tooltip" title="sign out" ></a>
         <a href="/settings/" class="btn btn-action glyphicon glyphicon-cog" data-placement="bottom" data-toggle="tooltip" title="settings"></a>
 {% endblock %}
 
 {% block noteContainer %}
+{% if notes %}
 		{% for note in  notes%}
 		  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
    <div class="panel note-sm">
@@ -41,7 +41,12 @@
         </div>
    </div>
  </div>
-		 {%endfor%}
+ {%endfor%}
+ {% else %}
+ <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+ 	<p id="nonotemessage">no notes here!</p>
+ </div>
+ {% endif %}
 
 {% endblock %}
 

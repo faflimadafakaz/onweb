@@ -17,7 +17,7 @@ body{
   background-color: #F1F1F1;
   overflow-x:hidden;
   overflow-y:auto;
-  margin-top:70px;
+  margin-top:70px;no
 }
 
 .center{
@@ -35,18 +35,6 @@ textarea {
   resize: vertical;
 }
 
-.floating-action-icon{
-  position: fixed;
-  top:45%;
-  right:30px;
-  z-index:101;
-  width: 56px;
-  height: 56px;
-  font-size: 20px;
-  border-radius: 35px;
-  box-shadow:0 0 4px #111;
-  padding-top:10px !important;
-}
 
 /*--------------------------------------
               Typography
@@ -117,7 +105,7 @@ nav  .glyphicon:hover{
   cursor:pointer;
   margin-left:10px;
   margin-right:10px;
-  color:
+  
   }
 
 .dropdown-menu{
@@ -183,6 +171,29 @@ nav  .glyphicon:hover{
   padding:30px;
 }
 
+ .floating-action-icon{
+  position: fixed;
+  bottom:20%;
+  right:30px;
+  z-index:101;
+  width: 56px;
+  height: 56px;
+  font-size: 20px;
+  border-radius: 35px;
+  box-shadow:0 0 4px #111;
+  padding-top:10px !important;
+}
+
+  #nonotemessage{
+  background-color: #FFF;
+  text-align: center;
+  padding: 30px;
+  display: block;
+  box-shadow: 1px 1px 1px 2px #E9E9E9;
+  position: relative;
+   
+}
+
 /*--------------------------------------
 Navigation drawer
 -------------------------------------- */
@@ -230,7 +241,6 @@ Media Queries
   body{
     margin-top:105px;
   }
-
   #icons{
     text-align:center;
     padding:0;
@@ -243,19 +253,6 @@ Media Queries
 
   .note-sm{
     height:150px;
-  }
-
-  .floating-action-icon{
-    position: fixed;
-    bottom:35px;
-    right:20px;
-    z-index:101;
-    width: 50px;
-    height: 50px;
-    padding: 10px 10px;
-    font-size: 24px;
-    border-radius: 25px;
-    text-align:center;
   }
 
   .modal-dialog{
@@ -288,13 +285,13 @@ Media Queries
   .modal-dialog{
     width:250px;
   }
-
+ 
 }
 
 
 /* Large desktop */
 @media (min-width: 1200px) {
-
+ 
 }
 
 /*-----------------
