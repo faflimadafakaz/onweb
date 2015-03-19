@@ -18,17 +18,27 @@ from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
 def home(request, auth_form=None, user_form=None):
+    message=''
     if request.user.is_authenticated():
-         user = request.user
-         uuser = User.objects.filter(id=user.id)[0]
-         notes = Notes.objects.all().order_by('-created').filter(user=uuser)
-         categories =  Category.objects.filter(user=user).order_by('name')
-         category_form = CategoryForm()
-         
-         count = []
-         
-         
-         return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form})
+        if request.method=='POST':
+            catform = CategoryForm(data=request.POST)
+            if catform.is_valid():
+                name = catform.cleaned_data
+                if not Category.objects.filter(user=request.user, name=name['name']):
+                    instance = catform.save(commit=False)
+                    instance.user = request.user
+                    instance.save()
+                    message = "category "+ name['name']+ " added"
+                else:
+                    message="duplicate category name"
+        
+        user = request.user
+        uuser = User.objects.filter(id=user.id)[0]
+        notes = Notes.objects.all().order_by('-created').filter(user=uuser)
+        categories =  Category.objects.filter(user=user).order_by('name')
+        category_form = CategoryForm()
+        count = []
+        return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message})
     else:
          auth_form = auth_form or  AuthenticateForm()
          user_form =  user_form or UserCreateForm()
@@ -89,26 +99,14 @@ def delete_note(request, note_slug):
             return redirect('login')
     return redirect('/')
 
-def add_category(request):
+def delete_category(request, category_slug):
     if request.user.is_authenticated():
-        catform = CategoryForm(data=request.POST)
-        if request.method == 'POST':
-            if catform.is_valid():
-                instance = catform.save(commit=False)
-                instance.user = request.user
-                instance.save()
+        if request.method=='GET':   
+            c = Category.objects.get(slug=category_slug, user=request.user)
+            c.delete()
         else:
             return redirect('home')
     return redirect('login')
-
-def delete_category(request, category_slug):
-    if request.method=='GET':
-        if request.user.is_authenticated():
-            c = Category.objects.get(slug=category_slug)
-            c.delete()
-        else:
-            return redirect('login')
-    return redirect('home')
 
 def settings(request):
     return render(request, 'settings.html')

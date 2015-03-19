@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 # Create your models here.
    
 class Category(models.Model):
-    name = models.CharField(max_length=40, unique=True)
+    name = models.CharField(max_length=40)
     slug = models.CharField(max_length=50)
     user = models.ForeignKey(User)
     #colour = models.IntegerField(required=False)

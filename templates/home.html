@@ -5,6 +5,7 @@
 {% endblock %}
        
 {% block icons %}
+{{message}}
 {{user}}
         <a class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></a>
         <a class="btn btn-action glyphicon glyphicon-sort" data-placement="bottom" data-toggle="tooltip" title="sort" ></a>
@@ -77,6 +78,6 @@
                 <h5>Categories <button style="margin-left:127px" id="add_category" class="btn whitebutton glyphicon glyphicon-plus"></button></h5>
               </li>
               <li class="sidebar-item" id="category_form">
-              <h5><form action='/add_category/' method="POST"> {% csrf_token %} <span class="form-group">{{ category_form.name }} <input type='submit' value='Ok' class='btn btn-primary'></span> </form></h5>
+              <h5><form action='/' method="POST"> {% csrf_token %} <span class="form-group">{{ category_form.name }} <input type='submit' value='Ok' class='btn btn-primary'></span> </form></h5>
               </li>
 {% endblock sidebar_menu %}
