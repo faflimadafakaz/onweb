@@ -28,7 +28,7 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
         
         user = request.user
         notes = Notes.objects.all().order_by('-created').filter(user=user)
-        categories =  [cat.name for cat in Category.objects.filter(user=user).order_by('name')]
+        categories =  Category.objects.filter(user=user).order_by('name')
         category_form = category_form or CategoryForm()
         notes_form = notes_form or NotesForm(user)
         count={}
@@ -36,7 +36,7 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
             count[cat]=0
             
         for note in notes:
-            count[note.category.name]+=1
+            count[note.category]+=1
         
         
         return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message,'notes_form':notes_form})
@@ -134,8 +134,8 @@ def notes_by_category(request, category_slug):
         categories = Category.objects.filter(user=user)
         count=0
         category_form = CategoryForm()
-        cat = Category.objects.get(slug=category_slug)
-        notes = Notes.objects.filter(category = cat)
+        cat = Category.objects.get(user=user, slug=category_slug)
+        notes = Notes.objects.filter(category = cat).order_by('-created')
         return render(request, 'home.html',{'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form})
     else:
         return render('login')
