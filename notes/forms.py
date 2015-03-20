@@ -51,7 +51,6 @@ class NotesForm(forms.ModelForm):
          super(NotesForm, self).__init__(*args, **kwargs)
          if user:
              qs = Category.objects.filter(user=user)
-             print qs
              self.fields['category'] = forms.ModelChoiceField(label='', queryset= qs)
          
      

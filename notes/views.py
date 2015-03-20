@@ -1,19 +1,13 @@
 from django.shortcuts import render
-
 import hashlib
-
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate, logout
-
 from notes.forms import UserCreateForm, AuthenticateForm, CategoryForm, NotesForm
 from notes.models import Notes, Category
 from django.contrib.auth.models import User
-
 from datetime import datetime
 from django.utils.text import slugify
-
-
 from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
@@ -33,13 +27,18 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
                     message="duplicate category name"
         
         user = request.user
-        uuser = User.objects.filter(id=user.id)[0]
-        notes = Notes.objects.all().order_by('-created').filter(user=uuser)
-        categories =  Category.objects.filter(user=user).order_by('name')
+        notes = Notes.objects.all().order_by('-created').filter(user=user)
+        categories =  [cat.name for cat in Category.objects.filter(user=user).order_by('name')]
         category_form = category_form or CategoryForm()
         notes_form = notes_form or NotesForm(user)
-
-        count = []
+        count={}
+        for cat in categories:
+            count[cat]=0
+            
+        for note in notes:
+            count[note.category.name]+=1
+        
+        
         return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message,'notes_form':notes_form})
     else:
          auth_form = auth_form or  AuthenticateForm()

@@ -30,7 +30,7 @@ class Notes(models.Model):
     category = models.ForeignKey(Category)
     user = models.ForeignKey(User)
     #reminder = models.DateTimeField(default='',null=True)
-    permalink = models.CharField(max_length=50, null=False)
+    permalink = models.CharField(max_length=50, null=False, unique=True)
     
     def __unicode__(self):
         return self.title
