@@ -5,10 +5,12 @@ Created on 02-Mar-2015
 '''
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
-from django.forms.widgets import TextInput, PasswordInput , Textarea
+from django.forms.widgets import TextInput, PasswordInput , Textarea,\
+    ChoiceInput
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
+
 
 from notes.models import Category, Notes
 
@@ -41,9 +43,17 @@ class AuthenticateForm(AuthenticationForm):
         return form
     
 class NotesForm(forms.ModelForm):
-     title = forms.CharField(required=False, widget=TextInput(attrs={'placeholder':'Title of note'}))
-     content = forms.CharField(required=True, widget = Textarea(attrs={'placeholder':'Note content'}))
-     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all())
+     title = forms.CharField(required=False, widget=TextInput(attrs={'placeholder':'Title of note','class':"form-control"}))
+     content = forms.CharField(required=True, widget = Textarea(attrs={'placeholder':'Note content','class':"form-control"}))
+     category = forms.ModelChoiceField(label="Category", queryset=Category.objects.filter(user=Category.objects.all()))
+     
+     def __init__(self, user, *args, **kwargs):
+         super(NotesForm, self).__init__(*args, **kwargs)
+         if user:
+             qs = Category.objects.filter(user=user)
+             print qs
+             self.fields['category'] = forms.ModelChoiceField(label='', queryset= qs)
+         
      
      class Meta:
          model=Notes

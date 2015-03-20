@@ -33,6 +33,7 @@ body{
 
 textarea {
   resize: vertical;
+  height:40px;
 }
 
 

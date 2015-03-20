@@ -5,7 +5,6 @@ This is a javascript file for omninotesweb
 
 Author:  Suraj patil
 Updated: January 2015
-keyCode: n-110
 */
 
 $(document).ready(function(){
@@ -16,15 +15,13 @@ $(document).ready(function(){
 
 	$('#category_form').addClass('hidden');
 
-    $('.floating-action-icon').popover({
-	  html: true,
-	  content: "<form action='/add_note/' method='post'> <input name='title' type='text' class='form-control' placeholder='Title' >\
-	   <textarea name='content' class='form-control' placeholder='content'></textarea> <select class='form-control'> <option>Milk</option> <option>Coffee</option>  <option>Tea</option> </select>  <input type='submit' class='btn btn-primary' value='submit'> </form>",
+    /*$('.floating-action-icon').popover({
 	  animation: true,
 	  
-	  });
+	  });*/
+  $(document).on("click", '.floating-action-icon', addNote);
   
-  $('[data-toggle="popover"]').popover({});
+  $('[data-toggle="popover"]').popover({}); //for category's more actions
 
    $(document).on("click", '.note-close',closeDelete); //when you delete a note, the x on the top right corner
 
@@ -36,33 +33,19 @@ $(document).ready(function(){
    $('#add_category').click(function(){
        $('#category_form').toggleClass('hidden');
    });
-   
-
-     
 
 });
-
-function addNoteToDOM(){
-  var title = $('#add-note-title').val();
-  var content = $('#add-note-content').val();
-  if (title!="" && content!=""){
-
-    var note=$('<div class="col-md-4 col-sm-4 "><div class="panel note-sm"><div class="panel-heading" >'+title +'<button class="close note-close" > &times;</button></div><hr style="margin:0 0 3px;"><div class="panel-body">'+content+' </div></div></div>');
-    $('.col-md-12.row').prepend(note);
-    $('#addNoteModal').modal('hide');
-    $('#add-note-title').val("");
-    $('#add-note-content').val("");
-  }
-  else{
-    alert("Note should have heading and title!");
-  }
-}
 
 function closeDelete(){
   var note = $(this).parent().parent().parent();
   note.fadeOut('slow');
   note.remove();
 
+}
+
+function addNote(){
+  var addNoteModal = $('#addNoteModal');
+  addNoteModal.modal('show');
 }
 
 function openNote(){

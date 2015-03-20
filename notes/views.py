@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate, logout
 
-from notes.forms import UserCreateForm, AuthenticateForm, CategoryForm
+from notes.forms import UserCreateForm, AuthenticateForm, CategoryForm, NotesForm
 from notes.models import Notes, Category
 from django.contrib.auth.models import User
 
@@ -37,8 +37,10 @@ def home(request, auth_form=None, user_form=None):
         notes = Notes.objects.all().order_by('-created').filter(user=uuser)
         categories =  Category.objects.filter(user=user).order_by('name')
         category_form = CategoryForm()
+        notes_form = NotesForm(user)
+        print user
         count = []
-        return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message})
+        return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message,'notes_form':notes_form})
     else:
          auth_form = auth_form or  AuthenticateForm()
          user_form =  user_form or UserCreateForm()
@@ -76,19 +78,22 @@ def register(request):
     return redirect('home')
 
 def add_note(request):
-    if request.method=='POST':
-        if request.user.is_authenticated():
-            note = Notes()
-            note.title = u"sample title"; 
-            note.content = u"sample note content";  
-            note.user = request.user;
-            note.category= Category.objects.get(name='diary')
-            note.created = datetime.now()
-            note.permalink = unicode(slugify(note.title)+'-'+str(random.randint(1,100)))
-            note.save()
+    if request.user.is_authenticated():
+        if request.method=='POST':
+            noteform = NotesForm(user=request.user, data=request.POST)
+            print noteform.data
+            if noteform.is_valid():
+                instance = noteform.save(commit=False)
+                instance.user = request.user
+                cat = instance.category
+                instance.category = Category.objects.get(user=request.user, name=cat)
+                instance.created = datetime.now()
+                instance.save()
+            else:
+                print 'form invalid'
         else:
-            return redirect('login')
-    return redirect('home')
+            return redirect('home')
+    return redirect('login')
 
 def delete_note(request, note_slug):
     if request.method=='GET':

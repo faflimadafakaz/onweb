@@ -71,20 +71,7 @@
             <h4 class="modal-title" id="newNoteLabel"><span class="glyphicon glyphicon-pencil"></span>  New Note</h4>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <!-- <label for="note-title" class="control-label">Title:</label> -->
-                <input type="text" class="form-control" id="add-note-title" placeholder="Title" style="border:none;border-bottom:1px solid gray; box-shadow:none;">
-              </div>
-              <div class="form-group">
-                 <!-- <label for="note-content" class="control-label">Content:</label> -->
-                <textarea class="form-control" id="add-note-content" placeholder="Content" rows="10" style="border:none;border-bottom:1px solid gray; box-shadow:none;"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="addNoteModalSaveBtn">Save</button>
+              <form action='/add_note/' method='POST'>{% csrf_token %} {{ notes_form.as_p }} <input type="submit" value="submit" class="form-control btn btn-primary" ></form>
           </div>
         </div>
       </div>
