@@ -23,7 +23,7 @@ $(document).ready(function(){
   
   $('[data-toggle="popover"]').popover({}); //for category's more actions
 
-   $(document).on("click", '.note-close',closeDelete); //when you delete a note, the x on the top right corner
+   //$(document).on("click", '.note-close',closeDelete); //when you delete a note, the x on the top right corner
 
    $(document).on('click','.open-note', openNote); //when you want to open a note in full screen, the second icon on the bottom right corner from the right
 

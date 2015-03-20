@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-import random
+import hashlib
 
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -17,7 +17,7 @@ from django.utils.text import slugify
 from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
-def home(request, auth_form=None, user_form=None):
+def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None):
     message=''
     if request.user.is_authenticated():
         if request.method=='POST':
@@ -36,9 +36,9 @@ def home(request, auth_form=None, user_form=None):
         uuser = User.objects.filter(id=user.id)[0]
         notes = Notes.objects.all().order_by('-created').filter(user=uuser)
         categories =  Category.objects.filter(user=user).order_by('name')
-        category_form = CategoryForm()
-        notes_form = NotesForm(user)
-        print user
+        category_form = category_form or CategoryForm()
+        notes_form = notes_form or NotesForm(user)
+
         count = []
         return render(request, 'home.html', {'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form,'message':message,'notes_form':notes_form})
     else:
@@ -81,13 +81,17 @@ def add_note(request):
     if request.user.is_authenticated():
         if request.method=='POST':
             noteform = NotesForm(user=request.user, data=request.POST)
-            print noteform.data
+            
             if noteform.is_valid():
                 instance = noteform.save(commit=False)
                 instance.user = request.user
                 cat = instance.category
                 instance.category = Category.objects.get(user=request.user, name=cat)
-                instance.created = datetime.now()
+                a = datetime.now()
+                a =  str(a.second + a.minute+a.hour+a.day+a.month+a.year)+str(request.user)
+                m = hashlib.new('ripemd160')
+                m.update(a)
+                instance.permalink=m.hexdigest()
                 instance.save()
             else:
                 print 'form invalid'
