@@ -36,7 +36,10 @@ textarea {
   height:40px;n
 }
 
-
+.errorlist li{
+  display: block;
+  color: rgb(203, 47, 47);
+}
 /*--------------------------------------
               Typography
 -------------------------------------- */
@@ -124,7 +127,7 @@ nav  .glyphicon:hover{
 }
 
 .note-lg{
-  height : 240px;
+  height : 100%;
 }
 
 .panel-body{

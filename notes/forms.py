@@ -15,32 +15,19 @@ from django.forms.models import ModelForm
 from notes.models import Category, Notes
 
 class UserCreateForm(UserCreationForm):
-    username = forms.CharField(required=True, widget = TextInput(attrs={'placeholder':'username'}))
-    email = forms.EmailField(required=True, widget = TextInput(attrs={'placeholder':'Email'}))
-    password1 = forms.CharField(required=True,widget = PasswordInput(attrs={'placeholder':'Password'}))
-    password2 = forms.CharField(required=True,widget = PasswordInput(attrs={'placeholder':'Re-enter Password'}))
-    
-    def is_valid(self):
-        form = super(UserCreateForm, self).is_valid()
-        for f ,error in self.errors.iteritems():
-            if f!='__all__':
-                self.fields[f].widget.attrs.update({'class':'error', 'value':strip_tags(error)})
-        return form
+    username = forms.CharField(required=True, widget = TextInput(attrs={'placeholder':'username', 'class':'form-control'}))
+    email = forms.EmailField(required=True, widget = TextInput(attrs={'placeholder':'Email', 'class':'form-control'}))
+    password1 = forms.CharField(required=True,widget = PasswordInput(attrs={'placeholder':'Password', 'class':'form-control'}))
+    password2 = forms.CharField(required=True,widget = PasswordInput(attrs={'placeholder':'Re-enter Password', 'class':'form-control'}))
     
     class Meta():
         fields = ['username','email','password1','password2']
         model = User
         
 class AuthenticateForm(AuthenticationForm):
-    username = forms.CharField(widget=TextInput(attrs={'placeholder':'username'}))
-    password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'password'}))
+    username = forms.CharField(widget=TextInput(attrs={'placeholder':'username', 'class':'form-control'}))
+    password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'password', 'class':'form-control'}))
     
-    def is_valid(self):
-        form = super(AuthenticateForm, self).is_valid()
-        for f,error in self.errors.iteritems():
-            if f!='__all__':
-                self.fields[f].widget.attrs.update({'class':'error', 'value':strip_tags(error)})
-        return form
     
 class NotesForm(forms.ModelForm):
      title = forms.CharField(required=False, widget=TextInput(attrs={'placeholder':'Title of note','class':"form-control"}))
