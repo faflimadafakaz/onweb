@@ -3,9 +3,10 @@
 {% block FAB %} 
 	<button class=" btn-danger btn glyphicon glyphicon-plus floating-action-icon" data-html="true" data-container="body" data-toggle="popover" data-placement="left" data-content=""></button>
 {% endblock %}
-       
+
+{% block notification %}{{message}}{% endblock %}
+
 {% block icons %}
-{{message}}
 {{user}}
         <a class="btn btn-action glyphicon glyphicon-search" data-placement="bottom" data-toggle="tooltip" title="search" ></a>
         <a class="btn btn-action glyphicon glyphicon-sort" data-placement="bottom" data-toggle="tooltip" title="sort" ></a>
@@ -43,12 +44,7 @@
  </div>
 
  {%endfor%}
- {% else %}
- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
- 	<p id="nonotemessage">no notes here!</p>
- </div>
-
- {% endif %}
+  {% endif %}
 
 {% endblock %}
 

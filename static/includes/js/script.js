@@ -12,6 +12,9 @@ $(document).ready(function(){
   /*on() is used instead of click because click can be used only on static elements, and on() is to be used when you add
   elements dynamically*/
   $('[data-toggle="tooltip"]').tooltip();
+  
+  if ($('#message').html()==''){ $('.notification').addClass('hidden')}
+  $('.notification-close').click(function(){$('.notification').addClass('hidden')})
 
 	$('#category_form').addClass('hidden');
 

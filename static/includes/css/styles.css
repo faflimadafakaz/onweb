@@ -40,6 +40,34 @@ textarea {
   display: block;
   color: rgb(203, 47, 47);
 }
+
+.notification{
+width: -moz-fit-content;
+position: fixed;
+right: 10px;
+max-width: 400px;
+padding: 12px;
+background-color: #FFF;
+box-shadow: 2px 2px 2px rgba(6, 40, 74, 0.42);
+border: medium none;
+border-radius: 10px;
+z-index: 1100;
+max-height: 90px;
+margin-top: 20px;
+}
+
+.notification-close{
+  background-color: #2037B3;
+  border-radius: 40px;
+  border:none;
+  color: #FFF;
+  align-content: center;
+  position: fixed;
+  margin-top: -20px;
+  
+  
+  
+}
 /*--------------------------------------
               Typography
 -------------------------------------- */
@@ -131,8 +159,12 @@ nav  .glyphicon:hover{
 }
 
 .panel-body{
-  height:40px;
+  height:50px;
   overflow-y: hidden;
+}
+
+.panel-footer {
+  padding-top:0px;
 }
 
 .panel{

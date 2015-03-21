@@ -11,23 +11,42 @@ from django.utils.text import slugify
 from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
-def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None):
+def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None, message=None):
     message=''
     if request.user.is_authenticated():
         if request.method=='POST':
             catform = CategoryForm(data=request.POST)
+            noteform = NotesForm(user=request.user, data=request.POST)
+            
             if catform.is_valid():
                 name = catform.cleaned_data
                 if not Category.objects.filter(user=request.user, name=name['name']):
                     instance = catform.save(commit=False)
                     instance.user = request.user
                     instance.save()
-                    message = "category "+ name['name']+ " added"
+                    message = "Category "+ name['name']+ " added"
                 else:
-                    message="duplicate category name"
+                    message="Duplicate category name"
+                    
+            
+            if noteform.is_valid():
+                instance = noteform.save(commit=False)
+                instance.user = request.user
+                cat = instance.category
+                instance.category = Category.objects.get(user=request.user, name=cat)
+                a = datetime.now()
+                a =  str(a.second + a.minute+a.hour+a.day+a.month+a.year)+str(request.user)
+                m = hashlib.new('ripemd160')
+                m.update(a)
+                instance.permalink=m.hexdigest()
+                instance.save()
+                message="Note added"
+            
         
         user = request.user
         notes = Notes.objects.all().order_by('-created').filter(user=user)
+        if not notes:
+            message="No notes here"
         categories =  Category.objects.filter(user=user).order_by('name')
         category_form = category_form or CategoryForm()
         notes_form = notes_form or NotesForm(user)
@@ -76,28 +95,11 @@ def register(request):
             return home(request, user_form=user_form)
     return redirect('home')
 
-def add_note(request):
+def edit_note(request, note_slug):
     if request.user.is_authenticated():
-        if request.method=='POST':
-            noteform = NotesForm(user=request.user, data=request.POST)
-            
-            if noteform.is_valid():
-                instance = noteform.save(commit=False)
-                instance.user = request.user
-                cat = instance.category
-                instance.category = Category.objects.get(user=request.user, name=cat)
-                a = datetime.now()
-                a =  str(a.second + a.minute+a.hour+a.day+a.month+a.year)+str(request.user)
-                m = hashlib.new('ripemd160')
-                m.update(a)
-                instance.permalink=m.hexdigest()
-                instance.save()
-            else:
-                print 'form invalid'
-        else:
-            return redirect('home')
-    return redirect('login')
-
+        note = Notes.objects.get(user=request.user, slug=note_slug)
+        return render(request, 'edit_note.html', {note:note})
+    return redirect('/')
 def delete_note(request, note_slug):
     if request.method=='GET':
         if request.user.is_authenticated():
