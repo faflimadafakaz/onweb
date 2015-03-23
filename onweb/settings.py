@@ -62,10 +62,10 @@ WSGI_APPLICATION = 'onweb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'onweb',
-        'USER':'root',
-        'PASSWORD':'suraj',
+        'ENGINE': 'django.db.backends.mysql', #change it as per requirement
+        'NAME': 'onweb', #add database name here
+        'USER':'', #add db username here
+        'PASSWORD':'', #add password here
         'HOST':'127.0.0.1',
         'PORT':'',
     }
