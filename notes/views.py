@@ -78,7 +78,8 @@ def login_view(request):
     return redirect('/')
 
 def logout_view(request):
-    logout(request)
+    if request.user.is_authenticated():
+        logout(request)
     return redirect('/')
 
 def register(request):
@@ -96,10 +97,20 @@ def register(request):
     return redirect('home')
 
 def edit_note(request, note_slug):
+    noteform=None
     if request.user.is_authenticated():
-        note = Notes.objects.get(user=request.user, slug=note_slug)
-        return render(request, 'edit_note.html', {note:note})
+        if request.method=='POST':
+            noteform = NotesForm(user=request.user, data=request.POST)
+            noteform_data = noteform.data
+            print noteform
+            if noteform.is_valid():
+                note = Notes.objects.get(permalink=note_slug)
+                print noteform
+                note.title = noteform_data['title']
+                note.content = noteform_data['content']
+                note.save()
     return redirect('/')
+
 def delete_note(request, note_slug):
     if request.method=='GET':
         if request.user.is_authenticated():
@@ -130,14 +141,20 @@ def trash(request):
 def reminders(request):
     return render(request, 'home.html')
 
-def notes_by_category(request, category_slug):
+def notes_by_category(request, category_slug, notes_form=None, category_form=None):
+    message=''
     if request.user.is_authenticated():
         user = request.user
         categories = Category.objects.filter(user=user)
         count=0
         category_form = CategoryForm()
         cat = Category.objects.get(user=user, slug=category_slug)
+        id = cat.id
         notes = Notes.objects.filter(category = cat).order_by('-created')
-        return render(request, 'home.html',{'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form})
+        if not notes:
+            message="No notes here"
+        notes_form= notes_form or NotesForm(user=request.user)
+        
+        return render(request, 'home.html',{'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form, 'message':message, 'notes_form':notes_form, 'id':id})
     else:
         return render('login')

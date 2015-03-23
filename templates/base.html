@@ -73,11 +73,17 @@
             <h4 class="modal-title" id="newNoteLabel"><span class="glyphicon glyphicon-pencil"></span>  New Note</h4>
           </div>
           <div class="modal-body">
-              <form action='/' method='POST'>{% csrf_token %} {{ notes_form.as_p }} <input type="submit" value="submit" class="form-control btn btn-primary" ></form>
+              <form action='/' method='POST'>
+              {% csrf_token %} 
+              {{ notes_form.as_p }} 
+              <input type="submit" style="width:150px;" value="Submit" class="form-control btn btn-primary" >
+              <button class="form-control btn btn-warning" class="close" data-dismiss="modal" style="width:150px;" >Cancel</button >
+              </form>
           </div>
         </div>
       </div>
     </div>
+        
 
     <!-- modal for opening note -->
     <div class="modal fade" id="openNoteModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -85,11 +91,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <button class="close" data-dismiss="modal"> &times;</button>
-            <h4 class="modal-title"></h4>
+          <h4 class="modal-title panel-heading"></h4>
+         
           </div>
           <div class="modal-body">
-
           </div>
+          
+         <span class=""><label>Created:</label><span class="created"></span> <label>Category</label><span class="category"></span></span> 
         </div>
       </div>
     </div>
