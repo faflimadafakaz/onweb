@@ -11,8 +11,12 @@ from django.utils.text import slugify
 from django.contrib.auth.tests.test_views import LoginURLSettings
 # Create your views here.
 
-def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None, message=None):
-    message=''
+def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None, message=None, notes=None, categories=None, stub=False):
+    stub = stub
+    message= message or ''
+    if not notes:
+        notes=notes
+    categories = categories or None
     if request.user.is_authenticated():
         if request.method=='POST':
             catform = CategoryForm(data=request.POST)
@@ -44,7 +48,9 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
             
         
         user = request.user
-        notes = Notes.objects.all().order_by('-created').filter(user=user)
+        if not stub: #This way when the notes_by_category() calls this method only the correct notes are send ahead & not empty or all notes
+            notes = Notes.objects.all().order_by('-created').filter(user=user)
+        
         if not notes:
             message="No notes here"
         categories =  Category.objects.filter(user=user).order_by('name')
@@ -67,12 +73,12 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
 def login_view(request):
     if request.method=='POST':
         if request.user.is_authenticated():
-            return redirect('/')
+            return redirect('home')
         else:
             form = AuthenticateForm(data=request.POST)
             if form.is_valid():
                 login(request, form.get_user())
-                return redirect('/')
+                return redirect('home')
             else:
                 return home(request, auth_form=form)
     return redirect('/')
@@ -145,16 +151,10 @@ def notes_by_category(request, category_slug, notes_form=None, category_form=Non
     message=''
     if request.user.is_authenticated():
         user = request.user
-        categories = Category.objects.filter(user=user)
-        count=0
-        category_form = CategoryForm()
         cat = Category.objects.get(user=user, slug=category_slug)
-        id = cat.id
         notes = Notes.objects.filter(category = cat).order_by('-created')
-        if not notes:
-            message="No notes here"
-        notes_form= notes_form or NotesForm(user=request.user)
-        
-        return render(request, 'home.html',{'notes':notes, 'user':user, 'categories':categories, 'count':count, 'category_form':category_form, 'message':message, 'notes_form':notes_form, 'id':id})
+
+        return home(request, notes=notes, stub=True) 
+
     else:
-        return render('login')
+        return redirect('/')
