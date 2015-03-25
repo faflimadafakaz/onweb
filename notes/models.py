@@ -10,13 +10,10 @@ from django.contrib.auth.models import User
    
 class Category(models.Model):
     name = models.CharField(max_length=40)
-    slug = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     user = models.ForeignKey(User)
     #colour = models.IntegerField(required=False)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
+
     
     def __unicode__(self):
         return self.name
