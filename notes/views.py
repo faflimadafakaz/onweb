@@ -1,6 +1,5 @@
 from django.shortcuts import render
 import hashlib
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import login, authenticate, logout
 from notes.forms import UserCreateForm, AuthenticateForm, CategoryForm, NotesForm
@@ -8,7 +7,7 @@ from notes.models import Notes, Category
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.utils.text import slugify
-from django.contrib.auth.tests.test_views import LoginURLSettings
+
 # Create your views here.
 
 def home(request, auth_form=None, user_form=None, notes_form=None, category_form=None, message=None, notes=None, categories=None, stub=False):
@@ -27,6 +26,7 @@ def home(request, auth_form=None, user_form=None, notes_form=None, category_form
                 if not Category.objects.filter(user=request.user, name=name['name']):
                     instance = catform.save(commit=False)
                     instance.user = request.user
+                    instance.slug = slugify(name['name'])
                     instance.save()
                     message = "Category "+ name['name']+ " added"
                 else:
@@ -152,7 +152,7 @@ def notes_by_category(request, category_slug, notes_form=None, category_form=Non
     if request.user.is_authenticated():
         user = request.user
         cat = Category.objects.get(user=user, slug=category_slug)
-        notes = Notes.objects.filter(category = cat).order_by('-created')
+        notes = Notes.objects.filter(user=user, category = cat).order_by('-created')
 
         return home(request, notes=notes, stub=True) 
 
