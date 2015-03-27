@@ -4,11 +4,12 @@ Python 2.7, Django 1.7.1
 
 Usage:
 
->It would be wise to make a virtualenv
+>It would be wise to make a virtualenv, otherwise follow the steps below
 
-1. `pip install django==1.7.1`
-2. cd to the source dir
-3. change the db & other settings that you want to change in `<src>/onweb/settings.py`
-4. execute the manage.py file, `python manage.py runserver` This will run the server on localhost:8000
+1. Install django on your machine
+2. Clone the repo into some folder, `git clone https://github.com/plyrs/onweb.git`
+3. `cd` to that folder
+4. change the db & other settings that you want to change in `<src>/onweb/settings.py`
+5. assuming you are in the onweb folder, execute the manage.py file by typing this on the terminal, `python manage.py runserver` This will run the server on localhost:8000, open localhost:8000 on your browser
 
 The project is released under the GNU GPL2 license
