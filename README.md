@@ -4,7 +4,7 @@ Python 2.7, Django 1.7.1
 
 Usage:
 
->It would be wise to make a virtualenv, otherwise follow the steps below
+>It would be wise to make a virtualenv, but it is not mandatory of course
 
 1. Install django on your machine
 2. Clone the repo into some folder, `git clone https://github.com/plyrs/onweb.git`
